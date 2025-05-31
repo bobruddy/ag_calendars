@@ -44,6 +44,7 @@ def requests_download_with_cookies(cookies, group_id, file_name):
 
 
 save_dir = os.getenv("AG_SAVE_DIR")
+os.makedirs(save_dir, exist_ok=True)
 group_list = (
             ('516620983', f'{save_dir}/hs-girls-xc.ics'),
             ('542092501', f'{save_dir}/hs-band.ics'),
