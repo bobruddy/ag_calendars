@@ -3,6 +3,7 @@
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 cd ${SCRIPT_DIR}
+git pull
 
 . .venv/bin/activate
 python3 get_cal.py
