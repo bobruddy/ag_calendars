@@ -9,6 +9,7 @@ git pull
 python3 get_cal.py
 . .env
 cp index.html ${AG_SAVE_DIR}
+cp misc_muddy.ics ${AG_SAVE_DIR}
 
 oldest_file=$(ls -1t ${AG_SAVE_DIR}/*.ics | tail -n 1) 
 formatted_date=$(date -r "${oldest_file}" +"%Y-%m-%d %H:%M")
