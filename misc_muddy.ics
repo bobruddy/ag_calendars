@@ -1,6 +1,6 @@
 BEGIN:VCALENDAR
 VERSION:2.0
-PRODID:-//Sample ICS//EN
+PRODID:-//Misc Muddy//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 BEGIN:VTIMEZONE
@@ -21,52 +21,35 @@ END:DAYLIGHT
 END:VTIMEZONE
 
 BEGIN:VEVENT
-UID:event1@example.com
-DTSTAMP:20250630T140000Z
-DTSTART;TZID=America/New_York:20250710T090000
-DTEND;TZID=America/New_York:20250710T103000
-SUMMARY:Morning Meeting
-DESCRIPTION:Discuss quarterly goals and status updates.
-LOCATION:Conference Room A
+UID:eliejanemr@gmail.com
+DTSTAMP:20250816T140000Z
+DTSTART;TZID=America/New_York:20250816T120000
+DTEND;TZID=America/New_York:20250817T120000
+SUMMARY:Elie Sleepover
+DESCRIPTION:Elie sleepover with Hanna, Melina at 104 Fox. Will take them to the pool to hang out at some point.
+LOCATION:104 Fox Dr, Landenberg, PA 19350
 END:VEVENT
 
 BEGIN:VEVENT
-UID:event2@example.com
+UID:bob@ruddy.net
 DTSTAMP:20250630T140000Z
-DTSTART;TZID=America/New_York:20250711T180000
-DTEND;TZID=America/New_York:20250712T080000
-SUMMARY:Overnight System Maintenance
-DESCRIPTION:Servers will be unavailable during this time window.
+DTSTART;TZID=America/New_York:20250823T050000
+DTEND;TZID=America/New_York:20250823T110000
+SUMMARY:Elie & Ethan Scoogies Tri
+DESCRIPTION:Elie & Ethan Scoogies Tri @ The Penllyn Club
+LOCATION:525 Gwynedd Ave, Blue Bell, PA 19422
+URL:https://www.trisignup.com/Race/PA/Penllyn/AUGUSTKIDSROCKTRI
 END:VEVENT
 
 BEGIN:VEVENT
-UID:event3@example.com
+UID:bob@ruddy.net
 DTSTAMP:20250630T140000Z
-DTSTART;VALUE=DATE:20250713
-DTEND;VALUE=DATE:20250714
-SUMMARY:All-Day Workshop
-DESCRIPTION:A full-day team-building workshop.
-END:VEVENT
-
-BEGIN:VEVENT
-UID:event4@example.com
-DTSTAMP:20250630T140000Z
-DTSTART;VALUE=DATE:20250715
-DTEND;VALUE=DATE:20250718
-SUMMARY:Annual Retreat
-DESCRIPTION:Company retreat to the mountains.
-LOCATION:Lake Placid, NY
-END:VEVENT
-
-BEGIN:VEVENT
-UID:event5@example.com
-DTSTAMP:20250630T140000Z
-DTSTART;TZID=America/New_York:20250720T140000
-DTEND;TZID=America/New_York:20250720T153000
-SUMMARY:Webinar: AI Trends 2025
-DESCRIPTION:A deep dive into the latest AI research and commercial applications.\nJoin us online for discussion and Q&A.
-LOCATION:Online
-URL:https://example.com/webinar/ai-trends-2025
+DTSTART;TZID=America/New_York:20250809T160000
+DTEND;TZID=America/New_York:20250810T140000
+SUMMARY:Elie YMCA Tri
+DESCRIPTION:Elie Tri @ Doylestown YMCA
+LOCATION:400 West Oakland Ave, Doylestown, PA 18901
+URL:https://www.ymcarivercrossing.org/community-family/races/kids-tri
 END:VEVENT
 
 END:VCALENDAR
