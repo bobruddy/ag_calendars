@@ -33,7 +33,7 @@ END:VEVENT
 BEGIN:VEVENT
 DTSTAMP:20250816T140000Z
 DTSTART;TZID=America/New_York:20250816T120000
-DTEND;TZID=America/New_York:20250817T120000
+DTEND;TZID=America/New_York:20250817T150000
 SUMMARY:Elie Sleepover
 DESCRIPTION:Elie sleepover with Hanna, Melina at 104 Fox. Will take them to the pool to hang out at some point.
 LOCATION:104 Fox Dr, Landenberg, PA 19350
