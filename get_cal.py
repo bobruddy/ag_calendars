@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
 
-import re, os, requests
-from playwright.sync_api import sync_playwright
-from dotenv import load_dotenv
+import json
+import os
+from pathlib import Path
 
+import requests
+from dotenv import load_dotenv
+from playwright.sync_api import sync_playwright
 
 load_dotenv()
 
-def playwright_login_get_cookies():
+SCRIPT_DIR = Path(__file__).resolve().parent
 
-    pw = os.getenv("AG_PW")
+
+def playwright_login_get_cookies():
     user = os.getenv("AG_USER")
+    pw = os.getenv("AG_PW")
 
     with sync_playwright() as playwright:
-
         browser = playwright.chromium.launch(headless=True)
         context = browser.new_context()
         page = context.new_page()
@@ -28,34 +32,33 @@ def playwright_login_get_cookies():
         browser.close()
         return cookies
 
-def requests_download_with_cookies(cookies, group_id, file_name):
+
+def requests_download_with_cookies(cookies, group_id, file_path):
     session = requests.Session()
-    download_url=f'https://app.schoology.com/calendar/feed/export/group/{group_id}/download'
+    download_url = f"https://app.schoology.com/calendar/feed/export/group/{group_id}/download"
 
-    # Convert Playwright cookies to Requests cookies
     for cookie in cookies:
-        session.cookies.set(cookie['name'], cookie['value'], domain=cookie['domain'])
+        session.cookies.set(cookie["name"], cookie["value"], domain=cookie["domain"])
 
-    # Perform the download
     resp = session.get(download_url)
-    with open(file_name, "wb") as f:
-        f.write(resp.content)
-    print(f"Download complete for {file_name}")
+    file_path.write_bytes(resp.content)
+    print(f"Download complete for {file_path.name}")
 
 
-save_dir = os.getenv("AG_SAVE_DIR")
-os.makedirs(save_dir, exist_ok=True)
-group_list = (
-            ('516620983', f'{save_dir}/hs-girls-xc.ics'),
-            ('542092501', f'{save_dir}/hs-band.ics'),
-            ('542095419', f'{save_dir}/hs-percussion.ics'),
-            ('517074687', f'{save_dir}/hs-swimming.ics'),
-            ('6230763180', f'{save_dir}/ms-xc.ics'),
-            ('517158427', f'{save_dir}/hs-track.ics'),
-            ('733432165', f'{save_dir}/hs-theater.ics'),
-        )
+def main():
+    save_dir = Path(os.getenv("AG_SAVE_DIR"))
+    save_dir.mkdir(parents=True, exist_ok=True)
 
-cookies = playwright_login_get_cookies()
-print('Received credentials')
-for group_id, file_name in group_list:
-    requests_download_with_cookies(cookies, group_id, file_name)
+    with open(SCRIPT_DIR / "calendars.json") as f:
+        calendars = json.load(f)
+
+    cookies = playwright_login_get_cookies()
+    print("Received credentials")
+
+    for cal in calendars:
+        dest = save_dir / cal["file"]
+        requests_download_with_cookies(cookies, cal["group"], dest)
+
+
+if __name__ == "__main__":
+    main()
