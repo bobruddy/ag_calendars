@@ -33,6 +33,11 @@ def playwright_login_get_cookies():
         return cookies
 
 
+def is_ics(content):
+    start = content.lstrip(b"\xef\xbb\xbf \t\r\n")
+    return start.startswith(b"BEGIN:VCALENDAR")
+
+
 def requests_download_with_cookies(cookies, group_id, file_path):
     session = requests.Session()
     download_url = f"https://app.schoology.com/calendar/feed/export/group/{group_id}/download"
@@ -41,8 +46,19 @@ def requests_download_with_cookies(cookies, group_id, file_path):
         session.cookies.set(cookie["name"], cookie["value"], domain=cookie["domain"])
 
     resp = session.get(download_url)
+    if not is_ics(resp.content):
+        print(
+            f"Skipping {file_path.name}: not an ICS calendar "
+            f"(group {group_id}, status {resp.status_code})"
+        )
+        if file_path.exists() and not is_ics(file_path.read_bytes()):
+            file_path.unlink()
+            print(f"Removed invalid existing file {file_path.name}")
+        return False
+
     file_path.write_bytes(resp.content)
     print(f"Download complete for {file_path.name}")
+    return True
 
 
 def main():
@@ -55,9 +71,15 @@ def main():
     cookies = playwright_login_get_cookies()
     print("Received credentials")
 
+    failed = []
     for cal in calendars:
         dest = save_dir / cal["file"]
-        requests_download_with_cookies(cookies, cal["group"], dest)
+        if not requests_download_with_cookies(cookies, cal["group"], dest):
+            failed.append(cal["file"])
+
+    if failed:
+        print("Failed downloads: " + ", ".join(failed))
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
